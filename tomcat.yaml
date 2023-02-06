@@ -1,0 +1,85 @@
+--- 
+- name: tomcat 
+  become: yes
+  hosts: all 
+  vars: 
+    user_name: tomcat
+    group_name: tomcat
+    user_home: /opt/tomcat
+    user_shell: /bin/false
+    java_versions: 
+      - openjdk-8-jdk
+      - openjdk-11-jdk
+      - openjdk-17-jdk 
+    tomcat_url: wget https://dlcdn.apache.org/tomcat/tomcat-10/v10.0.20/bin/apache-tomcat-10.0.20.tar.gz
+    url_dest: /tmp 
+    unarchive_file: /opt/tomcat  
+    permission_path: /opt/tomcat/bin 
+    user_xml: tomcat.user.xml
+    user_xml_dest: /opt/tomcat/conf/ 
+    user_context_xml: context.xml
+    user_contxt_dest: /opt/tomcat/webapps/host-manager/META-INF/
+    tomcat_serivce_file: serivce_file 
+    tomcat_serivce_file_dest: /etc/systemd/system/
+
+
+  tasks: 
+    - name: creating user 
+      ansible.builtin.debug:
+        msg: creating tomcat user
+    - name: creat the user 
+      ansible.builtin.user:
+        name: tomcat 
+        home: "{{ user_home }}"
+        shell:  "{{ user_shell }}" 
+    - name: install java in hosts 
+      ansible.builtin.debug: 
+        msg: install java 
+    - name: install the java 
+      ansible.builtin.apt: 
+        name: "{{ item }}"
+      loop: "{{ java_versions }}" 
+    - name: tomcat url 
+      ansible.builtin.get_url:
+        url: "{{ tomcat_url }}"
+        dest: "{{ url_dest  }}"
+    - name: unarchive the file 
+      ansible.builtin.unarchive:
+        src: "{{ url_dest }}" 
+        dest: "{{ unarchive_file }}"  
+        remote_src: yes    
+    - name: permission 
+      ansible.builtin.file: 
+        path: "{{ unarchive_file }}" 
+        owner: "{{ user_name }}" 
+        group: "{{ group_name }}" 
+        mode: '777'            
+    - name: permission 
+      ansible.builtin.file: 
+        path: "{{ unarchive_file }}" 
+        owner: "{{ user_name }}" 
+        group: "{{ group_name }}" 
+        mode: '777'        
+    - name: copy the user.xml file
+      ansible.builtin.copy: 
+        src: "{{ user_xml }}"
+        dest: "{{ user_xml_dest }}"
+        remote_src: yes     
+    - name: copy the context.xml file
+      ansible.builtin.copy: 
+        src: "{{ user_context_xml }}"
+        dest: "{{  user_contxt_dest }}"
+        remote_src: yes          
+    - name: copy the service.xml file
+      ansible.builtin.copy: 
+        src: "{{  tomcat_serivce_file}}"
+        dest: "{{ tomcat_serivce_file_dest }}"
+        remote_src: yes   
+    - name: enable the service 
+      ansible.builtin.systemd:
+        state: start
+        daemon_reload: true
+    - name: start and enable 
+      ansible.builtin.systemd:
+        enabled: true
+              

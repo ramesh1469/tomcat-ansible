@@ -1,0 +1,86 @@
+--- 
+- name: wildfly
+  become: yes
+  hosts: all
+  vars: 
+  
+    java_versions:
+      - openjdk-8-jdk
+      - openjdk-11-jdk
+      - openjdk-17-jdk
+    home_directory: /opt/wildfly
+    group_name: wildfly 
+    user_name: wildfly
+    user_shell: /sbin/nologin
+    wildfly_url: wget https://github.com/wildfly/wildfly/releases/download/27.0.1.Final/wildfly-27.0.1.Final.tar.gz
+    url_dest: /tmp/
+    creat_directory: /etc/wildfly
+    wildfly_conf: /opt/wildfly/docs/contrib/scripts/systemd/wildfly.conf
+    wildfly_service: /opt/wildfly/docs/contrib/scripts/systemd/wildfly.service
+    wildfly_service_dest: /etc/systemd/system/
+    wildfly_launch: /opt/wildfly/docs/contrib/scripts/systemd/launch.sh
+    wildfly_launch_dest: /opt/wildfly/bin/
+  tasks: 
+    - name: installing java
+      ansible.builtin.debug:
+        msg: installing java    
+    - name: openjdk installing
+      ansible.builtin.apt:
+        name: "{{ item }}"
+      loop: "{{ java_versions }}"
+    - name: creat the director
+      ansible.builtin.file:
+         path: "{{ home_directory }}"
+         state: directory
+         mode: "777"  
+    - name: creat the group and add the user 
+      ansible.builtin.group:
+        name: "{{ group_name }}" 
+        state: present    
+    - name: creat the user and add into group 
+      ansible.builtin.user:
+        name: "{{ user_name }}" 
+        shell: "{{ user_shell }}" 
+        append: yes      
+    - name: download url wildfly
+      ansible.builtin.get_url:
+        url: "{{ wildfly_url }}"  
+        dest: "{{ url_dest }}" 
+    - name: unarchive the file 
+      ansible.builtin.unarchive:
+        src: "{{ url_dest }}" 
+        dest: "{{ home_directory }}" 
+        remote_src: yes     
+    - name: creat the director
+      ansible.builtin.file:
+        path: "{{ creat_directory }}" 
+        state: directory
+        mode: "777"  
+    - name: copy the config file
+      ansible.builtin.copy: 
+        src: "{{ wildfly_conf }}" 
+        dest: "{{ creat_directory }}" 
+        remote_src: yes 
+    - name: copy the service file
+      ansible.builtin.copy: 
+        src: "{{ wildfly_service }}" 
+        dest: "{{ wildfly_service_dest }}" 
+        remote_src: yes                  
+    - name: copy the lunch file
+      ansible.builtin.copy: 
+        src: "{{ wildfly_service }}" 
+        dest: "{{ wildfly_service_dest }}" 
+        remote_src: yes  
+    - name: permission for shown 
+      ansible.builtin.file:
+        path: "{{ home_directory }}" 
+        owner: "{ user_name }}" 
+        group: "{{ group_name }}" 
+        mode: "777"             
+    - name: enable the service 
+      ansible.builtin.systemd:
+        state: start
+        daemon_reload: true
+    - name: start and enable 
+      ansible.builtin.systemd:
+        enabled: true
