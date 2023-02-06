@@ -21,7 +21,7 @@
     tomcat_serivce_file: tomcat.service
     tomcat_serivce_file_dest: /etc/systemd/system/tomcat.service 
     permission_service: /opt/tomcat/apache-tomcat-10.0.8/bin/ 
-    permission_.sh: /opt/tomcat/apache-tomcat-10.0.8/bin/*.sh
+    permission_sh: /opt/tomcat/apache-tomcat-10.0.8/bin/*.sh
 
 
   tasks: 
