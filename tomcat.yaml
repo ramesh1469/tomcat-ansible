@@ -80,8 +80,6 @@
     - name: enable the service 
       ansible.builtin.systemd:
         state: started
-        daemon_reload: true
-    - name: start and enable 
-      ansible.builtin.systemd:
         enabled: true
-              
+        daemon_reload: true
+    
