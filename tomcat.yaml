@@ -85,8 +85,8 @@
         owner: "{{ user_name }}" 
         group: "{{ group_name }}" 
         mode: '777' 
-    - name: perission for .sh 
-      ansible.builtin.items:
+    - name: permission for .sh 
+      ansible.builtin.file:
         path: "{{ item }}"  
         owner: "{{ user_name }}" 
         group: "{{ group_name }}" 
