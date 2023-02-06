@@ -19,7 +19,8 @@
     user_context_xml: context.xml
     user_contxt_dest: /opt/tomcat/webapps/host-manager/META-INF/
     tomcat_serivce_file: tomcat.service
-    tomcat_serivce_file_dest: /etc/systemd/system/tomcat.service
+    tomcat_serivce_file_dest: /etc/systemd/system/tomcat.service 
+    permission_service: /opt/tomcat/bin
 
 
   tasks: 
@@ -76,7 +77,13 @@
     - name: copy the service.xml file
       ansible.builtin.copy: 
         src: "{{  tomcat_serivce_file}}"
-        dest: "{{ tomcat_serivce_file_dest }}"  
+        dest: "{{ tomcat_serivce_file_dest }}" 
+    - name: permission tomcat bin 
+      ansible.builtin.file:
+        path: "{{ permission_service }}"
+        owner: "{{ user_name }}" 
+        group: "{{ group_name }}" 
+        mode: '777'       
     - name: enable the service 
       ansible.builtin.systemd:
         name: tomcat.service
