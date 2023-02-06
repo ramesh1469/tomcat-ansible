@@ -23,6 +23,12 @@
 
 
   tasks: 
+
+    - name: create home_directory
+      ansible.builtin.file:
+        path: "{{ user_home  }}" 
+        state: director 
+        mode: '777' 
     - name: creating user 
       ansible.builtin.debug:
         msg: creating tomcat user
