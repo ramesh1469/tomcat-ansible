@@ -5,7 +5,7 @@
   vars: 
     user_name: tomcat
     group_name: tomcat
-    user_home: /opt/tomcat
+    user_home: /opt/tomcat/
     user_shell: /bin/false
     java_versions: 
       - openjdk-8-jdk
@@ -13,7 +13,6 @@
       - openjdk-17-jdk 
     tomcat_url: https://archive.apache.org/dist/tomcat/tomcat-10/v10.0.8/bin/apache-tomcat-10.0.8.tar.gz
     url_dest: /tmp/apache-tomcat-10.0.8.tar.gz
-    creat_directory: /opt/tomcat/ram
     permission_path: /opt/tomcat/bin 
     user_xml: tomcat.user.xml
     user_xml_dest: /opt/tomcat/conf/ 
@@ -43,20 +42,14 @@
       ansible.builtin.get_url:
         url: "{{ tomcat_url }}"
         dest: "{{ url_dest  }}"
-    - name: create the director
-      ansible.builtin.file:
-        path: "{{ creat_directory }}"
-        owner: "{{ user_home }}"
-        group: "{{ group_name }}" 
-        mode: '777'
     - name: unarchive the file 
       ansible.builtin.unarchive:
         src: "{{ url_dest }}" 
-        dest: "{{ creat_directory }}/apache-tomcat-10.0.8"  
+        dest: "{{ user_home }}/apache-tomcat-10.0.8"  
         remote_src: yes    
     - name: permission 
       ansible.builtin.file: 
-        path: "{{creat_directory }}" 
+        path: "{{ user_home  }}" 
         owner: "{{ user_name }}" 
         group: "{{ group_name }}" 
         mode: '777'                
