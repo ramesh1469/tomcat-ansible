@@ -85,12 +85,14 @@
         owner: "{{ user_name }}" 
         group: "{{ group_name }}" 
         mode: '777' 
-    - name: permission tomcat bin .sh
-      ansible.builtin.file:
-        path: "{{ permission_.sh }}"
+    - name: perission 
+      ansible.builtin.items:
+        path: "{{ item }}"  
         owner: "{{ user_name }}" 
         group: "{{ group_name }}" 
-        mode: '777'                  
+        mode:  '777' 
+      with_items: 
+        -  "{{ permission_sh }}"
     - name: enable the service 
       ansible.builtin.systemd:
         name: tomcat.service
