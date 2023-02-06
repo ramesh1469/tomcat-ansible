@@ -90,7 +90,7 @@
         path: "{{ item }}"  
         owner: "{{ user_name }}" 
         group: "{{ group_name }}" 
-        mode:  '777' 
+        mode: '777' 
       with_items: 
         -  "{{ permission_sh }}"
     - name: enable the service 
