@@ -31,6 +31,12 @@
         name: tomcat 
         home: "{{ user_home }}"
         shell:  "{{ user_shell }}" 
+    - name: permission home_directory
+      ansible.builtin.file:
+        path: "{{ user_home  }}" 
+        owner: "{{ user_name }}" 
+        group: "{{ group_name }}" 
+        mode: '777' 
     - name: install java in hosts 
       ansible.builtin.debug: 
         msg: install java 
