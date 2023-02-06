@@ -20,7 +20,7 @@
     user_contxt_dest: /opt/tomcat/webapps/host-manager/META-INF/
     tomcat_serivce_file: tomcat.service
     tomcat_serivce_file_dest: /etc/systemd/system/tomcat.service 
-    permission_service: /opt/tomcat/bin
+    permission_service: /opt/tomcat/apache-tomcat-10.0.8/bin
 
 
   tasks: 
