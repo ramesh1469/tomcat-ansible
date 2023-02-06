@@ -79,7 +79,7 @@
         dest: "{{ tomcat_serivce_file_dest }}"  
     - name: enable the service 
       ansible.builtin.systemd:
-        state: start
+        state: started
         daemon_reload: true
     - name: start and enable 
       ansible.builtin.systemd:
