@@ -68,18 +68,15 @@
     - name: copy the user.xml file
       ansible.builtin.copy: 
         src: "{{ user_xml }}"
-        dest: "{{ user_xml_dest }}"
-        remote_src: yes     
+        dest: "{{ user_xml_dest }}"    
     - name: copy the context.xml file
       ansible.builtin.copy: 
         src: "{{ user_context_xml }}"
-        dest: "{{  user_contxt_dest }}"
-        remote_src: yes          
+        dest: "{{  user_contxt_dest }}"          
     - name: copy the service.xml file
       ansible.builtin.copy: 
         src: "{{  tomcat_serivce_file}}"
-        dest: "{{ tomcat_serivce_file_dest }}"
-        remote_src: yes   
+        dest: "{{ tomcat_serivce_file_dest }}"  
     - name: enable the service 
       ansible.builtin.systemd:
         state: start
