@@ -13,7 +13,7 @@
       - openjdk-17-jdk 
     tomcat_url: https://archive.apache.org/dist/tomcat/tomcat-10/v10.0.8/bin/apache-tomcat-10.0.8.tar.gz
     url_dest: /tmp/apache-tomcat-10.0.8.tar.gz
-    unarchive_file: /opt/tomcat/apache-tomcat-10.0.8 
+    creat_directory: /opt/ram
     permission_path: /opt/tomcat/bin 
     user_xml: tomcat.user.xml
     user_xml_dest: /opt/tomcat/conf/ 
@@ -43,23 +43,23 @@
       ansible.builtin.get_url:
         url: "{{ tomcat_url }}"
         dest: "{{ url_dest  }}"
+    - name: create the director
+      ansible.builtin.file:
+        path: "{{ creat_directory }}"
+        owner: "{{ user_home }}"
+        group: "{{ group_name }}" 
+        mode: '777'
     - name: unarchive the file 
       ansible.builtin.unarchive:
         src: "{{ url_dest }}" 
-        dest: "{{ unarchive_file }}"  
+        dest: "{{ creat_directory }}/apache-tomcat-10.0.8"  
         remote_src: yes    
     - name: permission 
       ansible.builtin.file: 
-        path: "{{ unarchive_file }}" 
+        path: "{{creat_directory }}" 
         owner: "{{ user_name }}" 
         group: "{{ group_name }}" 
-        mode: '777'            
-    - name: permission 
-      ansible.builtin.file: 
-        path: "{{ unarchive_file }}" 
-        owner: "{{ user_name }}" 
-        group: "{{ group_name }}" 
-        mode: '777'        
+        mode: '777'                
     - name: copy the user.xml file
       ansible.builtin.copy: 
         src: "{{ user_xml }}"
