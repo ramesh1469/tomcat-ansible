@@ -18,8 +18,8 @@
     user_xml_dest: /opt/tomcat/conf/ 
     user_context_xml: context.xml
     user_contxt_dest: /opt/tomcat/webapps/host-manager/META-INF/
-    tomcat_serivce_file: serivce_file 
-    tomcat_serivce_file_dest: /etc/systemd/system/
+    tomcat_serivce_file: tomcat.service
+    tomcat_serivce_file_dest: /etc/systemd/system/tomcat.service
 
 
   tasks: 
