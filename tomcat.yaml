@@ -71,7 +71,8 @@
       ansible.builtin.copy:
         src: /opt/tomcat/apache-tomcat-10.0.8/ 
         dest: /opt/tomcat/ 
-        remote_src: yes                   
+        remote_src: yes  
+        mode: '777'                 
     - name: copy the user.xml file
       ansible.builtin.copy: 
         src: "{{ user_xml }}"
