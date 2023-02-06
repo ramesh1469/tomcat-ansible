@@ -14,7 +14,7 @@
     tomcat_url: https://archive.apache.org/dist/tomcat/tomcat-10/v10.0.8/bin/apache-tomcat-10.0.8.tar.gz
     url_dest: /tmp/apache-tomcat-10.0.8.tar.gz
     permission_path: /opt/tomcat/bin 
-    user_xml: tomcat.user.xml
+    user_xml: tomcat-user.xml
     user_xml_dest: /opt/tomcat/conf/ 
     user_context_xml: context.xml
     user_contxt_dest: /opt/tomcat/webapps/host-manager/META-INF/
