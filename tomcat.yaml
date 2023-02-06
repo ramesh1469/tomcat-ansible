@@ -87,7 +87,7 @@
         mode: '777' 
     - name: permission for .sh 
       ansible.builtin.file:
-        path: "{{ item }}"  
+        path: /opt/tomcat/apache-tomcat-10.0.8/bin/ 
         owner: "{{ user_name }}" 
         group: "{{ group_name }}" 
         mode: '777' 
