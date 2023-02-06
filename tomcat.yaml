@@ -85,7 +85,7 @@
         owner: "{{ user_name }}" 
         group: "{{ group_name }}" 
         mode: '777' 
-    - name: perission 
+    - name: perission for .sh 
       ansible.builtin.items:
         path: "{{ item }}"  
         owner: "{{ user_name }}" 
