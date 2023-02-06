@@ -5,7 +5,7 @@
   vars: 
     user_name: tomcat
     group_name: tomcat
-    user_home: /opt/tomcat/
+    user_home: /opt/tomcat
     user_shell: /bin/false
     java_versions: 
       - openjdk-8-jdk
@@ -27,7 +27,7 @@
     - name: create home_directory
       ansible.builtin.file:
         path: "{{ user_home  }}" 
-        state: director 
+        state: directory 
         mode: '777' 
     - name: creating user 
       ansible.builtin.debug:
@@ -57,7 +57,7 @@
     - name: unarchive the file 
       ansible.builtin.unarchive:
         src: "{{ url_dest }}" 
-        dest: "{{ user_home }}/apache-tomcat-10.0.8"  
+        dest: "{{ user_home }}"
         remote_src: yes    
     - name: permission 
       ansible.builtin.file: 
