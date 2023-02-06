@@ -20,7 +20,8 @@
     user_contxt_dest: /opt/tomcat/webapps/host-manager/META-INF/
     tomcat_serivce_file: tomcat.service
     tomcat_serivce_file_dest: /etc/systemd/system/tomcat.service 
-    permission_service: /opt/tomcat/apache-tomcat-10.0.8/bin
+    permission_service: /opt/tomcat/apache-tomcat-10.0.8/bin/ 
+    permission_.sh: /opt/tomcat/apache-tomcat-10.0.8/bin/*.sh
 
 
   tasks: 
@@ -83,7 +84,13 @@
         path: "{{ permission_service }}"
         owner: "{{ user_name }}" 
         group: "{{ group_name }}" 
-        mode: '777'       
+        mode: '777' 
+    - name: permission tomcat bin .sh
+      ansible.builtin.file:
+        path: "{{ permission_.sh }}"
+        owner: "{{ user_name }}" 
+        group: "{{ group_name }}" 
+        mode: '777'                  
     - name: enable the service 
       ansible.builtin.systemd:
         name: tomcat.service
