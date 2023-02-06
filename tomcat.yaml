@@ -11,9 +11,9 @@
       - openjdk-8-jdk
       - openjdk-11-jdk
       - openjdk-17-jdk 
-    tomcat_url: https://dlcdn.apache.org/tomcat/tomcat-10/v10.0.20/bin/apache-tomcat-10.0.20.tar.gz
-    url_dest: /tmp/apache-tomcat-10.0.20.tar.gz
-    unarchive_file: /opt/tomcat/apache-tomcat-10.0.20  
+    tomcat_url: https://archive.apache.org/dist/tomcat/tomcat-10/v10.0.8/bin/apache-tomcat-10.0.8.tar.gz
+    url_dest: /tmp/apache-tomcat-10.0.8.tar.gz
+    unarchive_file: /opt/tomcat/apache-tomcat-10.0.8 
     permission_path: /opt/tomcat/bin 
     user_xml: tomcat.user.xml
     user_xml_dest: /opt/tomcat/conf/ 
